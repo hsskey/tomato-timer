@@ -40,37 +40,37 @@ const initialState = {
     timerDuration : TIMER_DURATION
 }
 
-function reducer(state = initialState, action){
-    switch(action.type){
-        case START_TIMER:
-            return applyStartTimer(state)
-        
-        case action.restartTimer:
-            return applyRestartTimer(state)
-        
-        case action.addSecond:
-            return applyAddSecond(state)
+function reducer(state = initialState, action) {
+    switch (action.type) {
+      case START_TIMER:
+        return applyStartTimer(state, action);
+      case RESTART_TIMER:
+        return applyRestartTimer(state, action);
+      case ADD_SECOND:
+        return applyAddSecond(state, action);
+      default:
+        return state;
     }
-}
+  }
 
 //Reducer Functions
-function applyStartTimer(state){
+function applyStartTimer(state, action) {
     return {
-        ...state,
-        isPlaying:true
-    }
-}
+      ...state,
+      isPlaying: true,
+      elapsedTime: 0
+    };
+  }
 
-function applyRestartTimer(state){
+  function applyRestartTimer(state, action) {
     return {
-        ...state,
-        isPlaying:false,
-        elapsedTime:0
-
-    }
-}
-
-function applyAddSecond(state){
+      ...state,
+      isPlaying: false,
+      elapsedTime: 0
+    };
+  }
+//시간을 재는 기능
+function applyAddSecond(state,action){
     if(state.elapsedTime < TIMER_DURATION){
         return {
             ...state,
@@ -90,6 +90,8 @@ const actionCreators = {
     restartTimer,
     addSecond
 }
+
+export {actionCreators};
 //Export Reducer
 export default reducer;
 
